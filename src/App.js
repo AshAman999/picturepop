@@ -2,65 +2,38 @@ import "./App.css";
 import Navbar from "./navbar";
 import ImageList from "./components/imagesList";
 import { useState } from "react";
+import pexels from "./api/pexels";
 
 function App() {
-  const [search, setSearch] = useState("S.....");
+  const [search, setSearch] = useState("Search for images...");
+  const [images, setImages] = useState([]);
+  function handleSubmit(e) {
+    console.log(search);
+    // search.preventDefault();
+    // try {
+    //   pexels
+    //     .get("/search", {
+    //       params: { query: search, per_page: 5 },
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //       setImages(response.data.photos);
+    //       console.log(response.data.photos);
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
   return (
     <div className="App">
       <h1>{search}</h1>
-      <Navbar search={search} setSearch={setSearch} />
-
-      <ImageList
+      <Navbar
         search={search}
-        images={[
-          {
-            id: 1,
-            urls: {
-              regular:
-                "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-            },
-            user: {
-              name: "John Doe",
-            },
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          },
-          {
-            id: 2,
-            urls: {
-              regular:
-                "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-            },
-            user: {
-              name: "John Doe",
-            },
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          },
-          {
-            id: 3,
-            urls: {
-              regular:
-                "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-            },
-            user: {
-              name: "John Doe",
-            },
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          },
-          {
-            id: 4,
-            urls: {
-              regular:
-                "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-            },
-            user: {
-              name: "John Doe",
-            },
-          },
-        ]}
+        setSearch={setSearch}
+        handleSubmit={handleSubmit}
       />
+
+      <ImageList search={search} images={[images]} />
     </div>
   );
 }

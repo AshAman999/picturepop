@@ -7,6 +7,7 @@ const Navbar = (props) => {
         className="search"
         placeholder={props.search}
         handleChange={(e) => props.setSearch(e.target.value)}
+        onSubmit={(e) => props.handleSubmit(e)}
       />
     </nav>
   );

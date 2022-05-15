@@ -4,8 +4,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-
 }
 
 .navbar{
@@ -46,3 +44,20 @@ image-box{
   background-color: aliceblue;
 }
 
+.bottom-btn{
+  display: flex;
+  justify-content: center;
+  margin: 15px;
+  
+}
+
+.search-box{
+  margin-top: 7px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.submit-btn{
+  margin-left: 30%;
+  margin-top: 5px;
+}

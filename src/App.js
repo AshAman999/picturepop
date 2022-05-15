@@ -1,54 +1,159 @@
 import "./App.css";
-import Navbar from "./navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import pexels from "./api/pexels";
-import ImageBox from "./components/imagebox";
 import { Card } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
 
 function App() {
-  const [search, setSearch] = useState("Search for images...");
+  const [search, setSearch] = useState("Random");
   const [images, setImages] = useState([]);
-  function handleSubmit() {
-    // console.log(search);
-    // search.preventDefault();
+  const [loading, setLoading] = useState(true);
+  const [pageNo, setPageNo] = useState(1);
+
+  useEffect(() => {
+    pexels
+      .get("/search", {
+        params: { query: "Random", per_page: 9 },
+      })
+      .then((response) => {
+        // console.log(response);
+        setImages(response.data.photos);
+        // console.log(response.data.photos);
+      });
+    setLoading(false);
+  }, []);
+  function handleSubmit(event) {
+    console.log(search);
+    setPageNo(1);
+    event.preventDefault();
     try {
       pexels
         .get("/search", {
-          params: { query: search, per_page: 5 },
+          params: { query: search, per_page: 9 },
         })
         .then((response) => {
-          // console.log(response);
           setImages(response.data.photos);
-          // console.log(response.data.photos);
+          setLoading(false);
         });
     } catch (error) {
       console.log(error);
     }
   }
-  return (
-    <div className="App">
-      <Navbar
-        search={search}
-        setSearch={setSearch}
-        handleSubmit={handleSubmit}
-      />
 
-      {images.map((result) => (
-        <div className="col-sm-4">
-          <Card style={{ "margin-top": "10px" }}>
-            <Card.Img
-              variant="top"
-              src={result.src.small}
-              alt={result.photographer}
-            />
-            <Card.Body>
-              <h5 className="card-title">
-                Author : <small>{result.photographer}</small>
-              </h5>
-            </Card.Body>
-          </Card>
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div className="card-header main-search">
+          <div className="row">
+            <div className="ml-auto">
+              <input
+                onChange={(e) => setSearch(e.target.value)}
+                className="AutoFocus form-control"
+                placeholder="Search for images..."
+                type="text"
+              />
+            </div>
+            {/* <div className="col-12 col-md-3 col-xl-3">  
+              <input onChange={noOfPics} name="deliveryNumber" className="AutoFocus form-control" placeholder="No of Images"  
+                  type="text" />  
+          </div>   */}
+            <div className="ml-auto">
+              <input
+                type="submit"
+                value="Search"
+                className="btn btn-primary search-btn"
+              />
+            </div>
+          </div>
         </div>
-      ))}
+        <div className="container">
+          <div className="row">
+            {loading ? (
+              // Loading Indicator
+              <div className="col-12 col-md-12 col-xl-12">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              </div>
+            ) : (
+              images.map((result) => (
+                <div className="col-sm-4" key={result.id}>
+                  <Card
+                    style={{
+                      marginTop: "10px",
+                      backgroundColor: "aliceblue",
+                    }}
+                    onClick={() => {
+                      window.open(result.src.original, "_blank");
+                    }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={result.src.landscape}
+                      alt={result.photographer}
+                    />
+                    <Card.Body>
+                      <h5 className="card-desciption">
+                        Author : <small>{result.photographer}</small>
+                      </h5>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </form>
+      <div className="col-12 col-md-12 col-xl-12">
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            let pg = pageNo + 1;
+            setPageNo(pg);
+            try {
+              console.log(pageNo);
+              pexels
+                .get("/search", {
+                  params: { query: { search }, per_page: 9, page: pageNo },
+                })
+                .then((response) => {
+                  setImages(response.data.photos);
+                  setLoading(false);
+                });
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          Next Page
+        </button>
+        <div>Currently on Page {pageNo}</div>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            if (pageNo === 1) return;
+            else {
+              let pg = pageNo - 1;
+              setPageNo(pg);
+              try {
+                console.log(pageNo);
+                pexels
+                  .get("/search", {
+                    params: { query: { search }, per_page: 9, page: pageNo },
+                  })
+                  .then((response) => {
+                    setImages(response.data.photos);
+                    setLoading(false);
+                  });
+              } catch (error) {
+                console.log(error);
+              }
+            }
+          }}
+        >
+          Previous Page
+        </button>
+      </div>
     </div>
   );
 }

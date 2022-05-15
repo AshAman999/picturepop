@@ -51,6 +51,7 @@ function App() {
       setLoading(false);
     }
   }
+  // eslint-disable-next-line no-unused-vars
   function handleCategoryClick() {
     setPageNo(1);
     setLoading(true);

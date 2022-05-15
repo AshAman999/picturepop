@@ -11,6 +11,7 @@ function App() {
   const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
+    setLoading(true);
     pexels
       .get("/search", {
         params: { query: "Random", per_page: 9 },
@@ -26,6 +27,24 @@ function App() {
     console.log(search);
     setPageNo(1);
     event.preventDefault();
+    setLoading(true);
+
+    try {
+      pexels
+        .get("/search", {
+          params: { query: search, per_page: 9 },
+        })
+        .then((response) => {
+          setImages(response.data.photos);
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  function handleCategoryClick() {
+    setPageNo(1);
+    setLoading(true);
     try {
       pexels
         .get("/search", {
@@ -61,20 +80,69 @@ function App() {
               />
             </div>
             {/* <div className="col-12 col-md-3 col-xl-3">  
-              <input onChange={noOfPics} name="deliveryNumber" className="AutoFocus form-control" placeholder="No of Images"  
+              <input onChange={noOfPics} name="eryNumber" className="AutoFocus form-control" placeholder="No of Images"  
                   type="text" />  
           </div>   */}
           </div>
         </form>
       </div>
+      <div className="categories">
+        <div
+          className="btn btn-primary ctgbutton"
+          onClick={async () => {
+            setSearch("Cat");
+            handleCategoryClick();
+          }}
+        >
+          Cat
+        </div>
 
+        <div
+          className="btn btn-primary ctgbutton"
+          onClick={() => {
+            setSearch("Bike");
+            handleCategoryClick();
+          }}
+        >
+          Bike
+        </div>
+
+        <div
+          className="btn btn-primary ctgbutton"
+          onClick={() => {
+            setSearch("Art");
+            handleCategoryClick();
+          }}
+        >
+          Art
+        </div>
+
+        <div
+          className="btn btn-primary ctgbutton"
+          onClick={() => {
+            setSearch("Food");
+            handleCategoryClick();
+          }}
+        >
+          Food
+        </div>
+        <div
+          className="btn btn-primary ctgbutton"
+          onClick={() => {
+            setSearch("Sea");
+            handleCategoryClick();
+          }}
+        >
+          Sea
+        </div>
+      </div>
       <div className="container">
         <div className="row">
           {loading ? (
             // Loading Indicator
-            <div className="col-12 col-md-12 col-xl-12">
+            <div className="col-12 col-md-12 col-xl-12 loading">
               <div className="spinner-border text-primary" role="status">
-                <span className="sr-only">Loading...</span>
+                <span className="sr-only"></span>
               </div>
             </div>
           ) : (
@@ -115,6 +183,8 @@ function App() {
             else {
               let pg = pageNo - 1;
               setPageNo(pg);
+              setLoading(true);
+
               try {
                 console.log(pageNo);
                 pexels
@@ -142,6 +212,8 @@ function App() {
             setPageNo(pg);
             try {
               console.log(pageNo);
+              setLoading(true);
+
               pexels
                 .get("/search", {
                   params: { query: { search }, per_page: 9, page: pageNo },

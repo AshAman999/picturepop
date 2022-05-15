@@ -48,6 +48,7 @@ image-box{
   display: flex;
   justify-content: center;
   margin: 15px;
+  align-items: center;
   
 }
 
@@ -60,4 +61,31 @@ image-box{
 .submit-btn{
   margin-left: 30%;
   margin-top: 5px;
+}
+
+.loading{
+  display: flex;
+  justify-content: center;
+ 
+}
+.categories{
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  
+
+}
+.items{
+  display: flex;
+  justify-content:space-evenly  ;
+
+ 
+  margin: 20px;
+ 
+}
+
+.ctgbutton{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px;
 }

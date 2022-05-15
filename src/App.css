@@ -1,3 +1,8 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+
 .App {
   text-align: center;
   display: flex;
@@ -26,6 +31,7 @@
   text-align: center;
   background-color: aliceblue;
 }
+
 .imageList{
   display: flex;
   flex-direction: row;
@@ -34,6 +40,7 @@
   margin: 20px;
   background-color: aliceblue;
 }
+
 image-box{
   margin: 20px;
   display: flex;
@@ -52,15 +59,8 @@ image-box{
   
 }
 
-.search-box{
-  margin-top: 7px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .submit-btn{
-  margin-left: 30%;
-  margin-top: 5px;
+  margin-left: 20px;
 }
 
 .loading{
@@ -78,14 +78,46 @@ image-box{
 .items{
   display: flex;
   justify-content:space-evenly  ;
-
- 
   margin: 20px;
- 
 }
 
 .ctgbutton{
   display: flex;
   justify-content: space-evenly;
   margin: 20px;
+}
+
+.search-bar{
+  display: inline;
+  justify-self: center;
+}
+
+.search-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blanchedalmond;
+  width: 100%;
+  height: 100px;
+}
+
+.search-btn{
+  padding: 10px;
+  margin-right: 0px;
+}
+
+input[type=text] {
+  padding:10px;
+  border: 0;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
+  border-radius: 10px;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blanchedalmond;
+    width: 100%;
+    height: 50px;
 }

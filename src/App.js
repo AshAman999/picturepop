@@ -9,6 +9,7 @@ function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageNo, setPageNo] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [errorMsg, setError] = useState("");
 
   useEffect(() => {
@@ -71,23 +72,19 @@ function App() {
 
   return (
     <div>
-      <div className="search-box">
+      <div className="search-bar">
         <form onSubmit={handleSubmit}>
-          <div className="card-header main-search">
-            <div className="ml-auto">
+          <div className="search-box">
+            <div className="">
               <input
                 onChange={(e) => setSearch(e.target.value)}
-                className="AutoFocus form-control"
+                className="form-cont"
                 placeholder="Search for images..."
                 type="text"
               />
             </div>
-            <div className="ml-auto submit-btn">
-              <input
-                type="submit"
-                value="Search"
-                className="btn btn-primary search-btn"
-              />
+            <div className="submit-btn">
+              <input type="submit" value="Search" className="btn btn-primary" />
             </div>
             {/* <div className="col-12 col-md-3 col-xl-3">  
               <input onChange={noOfPics} name="eryNumber" className="AutoFocus form-control" placeholder="No of Images"  
@@ -96,7 +93,7 @@ function App() {
           </div>
         </form>
       </div>
-      <div className="categories">
+      {/* <div className="categories">
         <div
           className="btn btn-primary ctgbutton"
           onClick={async () => {
@@ -145,7 +142,7 @@ function App() {
         >
           Sea
         </div>
-      </div>
+      </div> */}
       <div className="container">
         <div className="row">
           {loading ? (
@@ -244,6 +241,7 @@ function App() {
           <FiChevronsRight />
         </button>
       </div>
+      <div className="footer">Made by Aman 2022</div>
     </div>
   );
 }

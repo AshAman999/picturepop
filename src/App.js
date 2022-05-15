@@ -2,9 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import pexels from "./api/pexels";
 import { Card } from "react-bootstrap";
-// import ReactPaginate from "react-paginate";
-import { Icon } from "@material-ui/core";
-import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
+import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 
 function App() {
   const [search, setSearch] = useState("Random");
@@ -133,7 +131,7 @@ function App() {
             }
           }}
         >
-          <AccessAlarm />
+          <FiChevronsLeft />
         </button>
         <div>Page {pageNo}</div>
         <button
@@ -156,7 +154,9 @@ function App() {
               console.log(error);
             }
           }}
-        ></button>
+        >
+          <FiChevronsRight />
+        </button>
       </div>
     </div>
   );

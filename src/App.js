@@ -9,19 +9,25 @@ function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageNo, setPageNo] = useState(1);
+  const [errorMsg, setError] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    pexels
-      .get("/search", {
-        params: { query: "Random", per_page: 9 },
-      })
-      .then((response) => {
-        // console.log(response);
-        setImages(response.data.photos);
-        // console.log(response.data.photos);
-      });
-    setLoading(false);
+    try {
+      pexels
+        .get("/search", {
+          params: { query: "Random", per_page: 9 },
+        })
+        .then((response) => {
+          // console.log(response);
+          setImages(response.data.photos);
+          setLoading(false);
+          // console.log(response.data.photos);
+        });
+    } catch (e) {
+      setError(e);
+      setLoading(false);
+    }
   }, []);
   function handleSubmit(event) {
     console.log(search);
@@ -40,6 +46,8 @@ function App() {
         });
     } catch (error) {
       console.log(error);
+      setError(error);
+      setLoading(false);
     }
   }
   function handleCategoryClick() {
@@ -56,6 +64,8 @@ function App() {
         });
     } catch (error) {
       console.log(error);
+      setError(error);
+      setLoading(false);
     }
   }
 
@@ -197,6 +207,8 @@ function App() {
                   });
               } catch (error) {
                 console.log(error);
+                setError(error);
+                setLoading(false);
               }
             }
           }}
@@ -224,6 +236,8 @@ function App() {
                 });
             } catch (error) {
               console.log(error);
+              setError(error);
+              setLoading(false);
             }
           }}
         >

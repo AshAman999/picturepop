@@ -81,11 +81,11 @@ image-box{
   margin: 20px;
 }
 
-.ctgbutton{
+/* .ctgbutton{
   display: flex;
   justify-content: space-evenly;
   margin: 20px;
-}
+} */
 
 .search-bar{
   display: inline;

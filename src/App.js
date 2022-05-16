@@ -5,6 +5,7 @@ import InputContainer from "./components/inputcontainer";
 import ImageGallery from "./components/imageGallerys";
 import handleSubmit from "./functions/handlesubmit";
 import BottomNav from "./components/bottomnav";
+import pexels from "./api/pexels";
 
 function App() {
   const [search, setSearch] = useState("Random");
@@ -15,8 +16,23 @@ function App() {
   const [errorMsg, setError] = useState("");
 
   useEffect(() => {
-    handleSubmit(search, setImages, setLoading, setError, setPageNo, setSearch);
-  }, [search]);
+    setPageNo(1);
+    setLoading(true);
+    try {
+      pexels
+        .get("/search", {
+          params: { query: "Random", per_page: 9 },
+        })
+        .then((response) => {
+          setImages(response.data.photos);
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setError(error);
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <div>
@@ -24,6 +40,9 @@ function App() {
         search={search}
         setSearch={setSearch}
         handleSubmit={handleSubmit}
+        setImages={setImages}
+        setLoading={setLoading}
+        setError={setError}
         setPageNo={setPageNo}
       />
       <div className="container">
